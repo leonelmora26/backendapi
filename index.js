@@ -18,7 +18,7 @@ app.use("/api/proyecto", proyecto);
 const server = http.createServer(app)
 
 mongoose.connect(`${process.env.mongoDB}`)
-  .then(() => console.log('Connected!'));
+  .then(() => console.log('Conexión a mongoDB exitosa!'));
 
 server.listen(port, () => {
     console.log(`Servidor corriendo en el puerto ${port}`);
