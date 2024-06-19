@@ -1,6 +1,16 @@
 import Usuario from "../models/usuario.js";
 
 const helpersUsuario = {
+  existeId: async (id, req) => {
+    const existe = await Usuario.findById(id);
+
+    if (!existe) {
+      throw new Error(`El id no existe ${id}`);
+    }
+
+    req.req.UsuarioUpdate = existe;
+  },
+
   existecedula: async (cedula, req) => {
     if (cedula.length < 10)
       throw new Error("La cédula debe contener 10 dígitos");
@@ -10,7 +20,7 @@ const helpersUsuario = {
     });
 
     if (existe) {
-      if (req.method === "PUT" && req.req.body._id != existe._id) {
+      if (req.method === "PUT" && req.req.body._id !== existe._id) {
         throw new Error(
           `Ya existe esa cédula en la base de datos para otro usuario!!!`
         );
@@ -18,8 +28,6 @@ const helpersUsuario = {
         throw new Error(`Ya existe esa cédula en la base de datos!!!`);
       }
     }
-
-    req.UsuarioUpdate = existe;
   },
 
   existeTelefono: async (telefono, req) => {
@@ -28,14 +36,12 @@ const helpersUsuario = {
     const existe = await Usuario.findOne({ telefono });
 
     if (existe) {
-      if (req.method === "PUT" && req.req.body._id != existe._id) {
+      if (req.method === "PUT" && req.req.body._id !== existe._id) {
         throw new Error(`Ya existe ese teléfono en la base de datos!!! `);
       } else if (req.req.method === "POST") {
         throw new Error(`Ya existe ese teléfono en la base de datos!!! `);
       }
     }
-
-    req.req.UsuarioUpdate = existe;
   },
 
   existeCorreo: async (correo, req) => {
@@ -46,14 +52,12 @@ const helpersUsuario = {
     }
 
     if (existe) {
-      if (req.method === "PUT" && req.req.body._id != existe._id) {
+      if (req.method === "PUT" && req.req.body._id !== existe._id) {
         throw new Error(`Ya existe ese correo en la base de datos!!! `);
       } else if (req.req.method === "POST") {
         throw new Error(`Ya existe ese correo en la base de datos!!! `);
       }
     }
-
-    req.req.UsuarioUpdate = existe;
   },
 };
 export default helpersUsuario;

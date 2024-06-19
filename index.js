@@ -1,15 +1,26 @@
 import express from 'express';
-import usuario from './routes/usuario.js'
-import dbconnect from './config/config.js';
+import http from 'http';
+import "dotenv/config";
+import mongoose from 'mongoose'
+import usuario from './routes/usuario.js';
+import proyecto from './routes/proyecto.js';
+
+
 
 const app = express();
+const port= process.env.PORT
 
 app.use(express.json());
 
-app.use("/api/usuario", usuario)
+app.use("/api/usuario", usuario);
+app.use("/api/proyecto", proyecto);
 
-app.listen(3001, () => {
-    console.log("El servidor está en el puerto 3001")
-})
+const server = http.createServer(app)
 
-dbconnect()
+mongoose.connect(`${process.env.mongoDB}`)
+  .then(() => console.log('Connected!'));
+
+server.listen(port, () => {
+    console.log(`Servidor corriendo en el puerto ${port}`);
+    console.log('hola soy mongo', process.env.mongoDB)
+});
