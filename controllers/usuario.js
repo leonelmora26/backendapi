@@ -4,8 +4,10 @@ const httpUsuario = {
   //Get
   getAll: async (req, res) => {
     try {
-      const usuario = await Usuario.find();
-      res.json(usuario);
+      const usuario = await Usuario.find()
+        .populate("idProducto")
+        .populate("idImpuesto");
+      res.json({ usuario });
     } catch (error) {
       res.status(500).json({ error });
     }
@@ -14,16 +16,9 @@ const httpUsuario = {
   //Post registro usuario
   registroUsuario: async (req, res) => {
     try {
-      const { nombre, apellido, cedula, correo, telefono } = req.body;
+      const { nombre, identificacion, idProducto, idImpuesto } = req.body;
 
-      const usuario = new Usuario({
-        nombre,
-        apellido,
-        cedula,
-        correo,
-        telefono,
-      });
-
+      const usuario = new Usuario({ nombre, identificacion, idProducto, idImpuesto });
       await usuario.save();
 
       res.json(usuario);
@@ -35,16 +30,15 @@ const httpUsuario = {
   editarUsuario: async (req, res) => {
     try {
       const { id } = req.params;
-      const { nombre, apellido, cedula, correo, telefono } = req.body;
+      const { nombre, identificacion, idProducto, idImpuesto } = req.body;
 
       const usuario = await Usuario.findByIdAndUpdate(
         id,
         {
           nombre,
-          apellido,
-          cedula,
-          correo,
-          telefono,
+          identificacion,
+          idProducto,
+          idImpuesto,
         },
         { new: true }
       );
