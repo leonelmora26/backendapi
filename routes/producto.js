@@ -12,6 +12,7 @@ router.get("/all", httpProducto.getAll);
 router.post(
     "/agregar",
     [
+        check ("descripcion").not().isEmpty(),
         check("codigo_producto").not().isEmpty(),
         check("cantidad").not().isEmpty(),
         check("valor_unitario").not().isEmpty(),

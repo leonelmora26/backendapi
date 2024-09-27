@@ -32,8 +32,6 @@ router.put(
     check("id", "Id no válida").isMongoId(),
     check("nombre", "Digite el nombre").not().isEmpty(),
     check("identificacion", "Digite la identificacion").not().isEmpty(),
-    check("idProducto", "idProducto inválida").isMongoId(),
-    check("idImpuesto", "id impuesto inválida").isMongoId(),
     validarCampos,
   ],
   httpUsuario.editarUsuario

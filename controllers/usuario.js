@@ -16,9 +16,9 @@ const httpUsuario = {
   //Post registro usuario
   registroUsuario: async (req, res) => {
     try {
-      const { nombre, identificacion, idProducto, idImpuesto } = req.body;
+      const { nombre, identificacion, correo, direccion, telefono, idProducto, idImpuesto } = req.body;
 
-      const usuario = new Usuario({ nombre, identificacion, idProducto, idImpuesto });
+      const usuario = new Usuario({ nombre, identificacion, correo, direccion, telefono, idProducto, idImpuesto });
       await usuario.save();
 
       res.json(usuario);
@@ -30,15 +30,13 @@ const httpUsuario = {
   editarUsuario: async (req, res) => {
     try {
       const { id } = req.params;
-      const { nombre, identificacion, idProducto, idImpuesto } = req.body;
+      const { nombre, identificacion } = req.body;
 
       const usuario = await Usuario.findByIdAndUpdate(
         id,
         {
           nombre,
           identificacion,
-          idProducto,
-          idImpuesto,
         },
         { new: true }
       );

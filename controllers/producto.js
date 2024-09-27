@@ -17,9 +17,10 @@ const httpProducto = {
     // Post
     registroProducto: async (req, res) => {
         try {
-            const { codigo_producto, cantidad, valor_unitario, fecha_vencimiento, fecha_elaboracion } = req.body;
+            const { descripcion, codigo_producto, cantidad, valor_unitario, fecha_vencimiento, fecha_elaboracion } = req.body;
 
             const producto = new Producto({ 
+                descripcion,
                 codigo_producto, 
                 cantidad, 
                 valor_unitario, 
@@ -41,11 +42,12 @@ const httpProducto = {
     editarproducto: async (req, res) => {
         try {
             const { id } = req.params;
-            const { codigo_producto, cantidad, valor_unitario, fecha_vencimiento, fecha_elaboracion } = req.body;
+            const {  descripcion,codigo_producto, cantidad, valor_unitario, fecha_vencimiento, fecha_elaboracion } = req.body;
             
             const producto = await Producto.findByIdAndUpdate(
                 id,
                 {
+                    descripcion,
                     codigo_producto, 
                     cantidad, 
                     valor_unitario, 
